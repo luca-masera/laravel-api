@@ -12,9 +12,24 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
-        return response()->json([
-            'success' => true,
-            'results' => $projects
-        ]);
+        return response()->json(
+            [
+                'success' => true,
+                'results' => $projects
+            ]
+        );
     }
+
+    public function show($slug)
+    {
+        $project = Project::where('slug', $slug)->with(['type', 'technologies'])->first();
+        return response()->json(
+            [
+                'success' => true,
+                'results' => $project
+            ]
+        );
+
+    }
+
 }
