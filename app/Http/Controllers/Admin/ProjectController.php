@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Project;
-use App\Models\Type;
-use App\Models\Technology;
+
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Controllers\Controller;
 
+use App\Models\Project;
+
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Type;
+use App\Models\Technology;
 
 
 class ProjectController extends Controller
@@ -21,7 +23,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::paginate(3);
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -121,7 +123,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        $project->tags()->detach();
+        //$project->technologies()->detach();
         if ($project->image) {
             Storage::delete($project->image);
         }
