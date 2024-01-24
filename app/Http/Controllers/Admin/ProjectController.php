@@ -25,6 +25,7 @@ class ProjectController extends Controller
     {
         $projects = Project::paginate(3);
         return view('admin.projects.index', compact('projects'));
+
     }
 
     /**
