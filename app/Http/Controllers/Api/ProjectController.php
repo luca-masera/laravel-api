@@ -9,9 +9,17 @@ use App\Models\Project;
 class ProjectController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::paginate(4);
+        $typeId = $request->query('type');
+
+        if ($typeId) {
+            $projects = Project::where('type_id', $typeId)->paginate(4);
+
+        } else {
+            $projects = Project::paginate(4);
+        }
+
         return response()->json(
             [
                 'success' => true,
